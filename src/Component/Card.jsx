@@ -4,21 +4,26 @@ const Card = ({ resData }) => {
   const { cloudinaryImageId, name, cuisines, costForTwo, avgRating } =
     resData?.info || {};
   const { deliveryTime } = resData?.info?.sla || {};
+  console.log(cuisines);
 
   return (
     <>
-      <div className="card w-[300px] rounded-md border bg-[#F5F5F6] dark:bg-gray-900 dark:text-white hover:scale-105 duration-200 ease-in-out">
+      <div className="card w-[300px] rounded-md border h-auto bg-[#F5F5F6] dark:bg-gray-900 dark:text-white hover:scale-105 duration-200 ease-in-out">
         <img
           src={CARD_IMAGE_URL + cloudinaryImageId}
           alt="Laptop"
           className="h-[200px] w-full rounded-t-md object-cover"
         />
-        <div className="p-4">
+        <div className="p-4 flex flex-col justify-center">
           <h1 className="inline-flex items-center text-lg font-semibold">
-            {name}
+            {name.length > 23 ? name.slice(0, 23) + "..." : name}
           </h1>
-          <p className="mt-3 text-sm text-gray-600">
-            {cuisines ? cuisines.join(", ") : " "}
+          <p className="mt-3 text-sm  dark:text-gray-300 text-gray-600">
+            {cuisines
+              ? cuisines.length > 4
+                ? cuisines.slice(0, 3).join(", ") + "..."
+                : cuisines.join(", ")
+              : " "}
           </p>
           <div className="mt-4">
             <span className="mb-2 mr-2 inline-block rounded-full bg-[#48C479]  text-[12px] px-3 py-1  font-bold text-gray-900">

@@ -10,8 +10,8 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [newList, setNewList] = useState([]);
-  const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [search, setSearch] = useState("");
   const [banner] = useState(mockPicks);
 
   const PromotedRestaurant = withPromotedLabel(Card);
@@ -22,7 +22,6 @@ const Body = () => {
   const fetchData = async () => {
     const data = await fetch(
       " https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&offset=15&sortBy=RELEVANCE&pageType=SEE_ALL&page_type=DESKTOP_SEE_ALL_LISTING"
     );
 
     const json = await data.json();
@@ -46,9 +45,7 @@ const Body = () => {
     // call the checkJsonData() function which return Swiggy Restaurant data
     const restaurantData = await checkJsonData(json);
 
-    console.log(json);
-
-    console.log(restaurantData[1]?.info?.name);
+    console.log(restaurantData);
     setNewList(restaurantData);
     setFilteredData(restaurantData);
   };
@@ -69,119 +66,125 @@ const Body = () => {
     </div>
   ) : (
     <>
-      <div className="banner">
-        {banner.bannerCarousel.cards.map((item) => (
-          <Recommended key={item.id} top={item} />
-        ))}
-      </div>
-      <div className="wrapper">
-        <div className="filter-btns">
-          <button
-            className="btn"
-            onClick={() => {
-              const topRatedSort = newList.sort(
-                (a, b) => b?.data?.data?.avgRating - a?.data?.data?.avgRating
-              );
-              const topRatedFilter = topRatedSort.filter(
-                (x) => x?.data?.data?.avgRating
-              );
-              setFilteredData(topRatedFilter);
-            }}
-          >
-            Top Rated Restaurants
-          </button>
-          <button
-            className="btn fasterDelivery"
-            onClick={() => {
-              const deliverySort = newList.sort(
-                (a, b) =>
-                  a?.data?.data?.sla?.deliveryTime -
-                  b?.data?.data?.sla?.deliveryTime
-              );
-              const deliveryFilter = deliverySort.filter(
-                (x) => x?.data?.data?.sla?.deliveryTime
-              );
-              setFilteredData(deliveryFilter);
-            }}
-          >
-            Faster Delivery
-          </button>
-          <button
-            className="btn"
-            onClick={() => {
-              const lowToHighSort = newList.sort(
-                (a, b) => a?.data?.data?.costForTwo - b?.data?.data?.costForTwo
-              );
-              const lowToHighFilter = lowToHighSort.filter(
-                (x) => x?.data?.data?.costForTwo
-              );
-              setFilteredData(lowToHighFilter);
-            }}
-          >
-            Cost: Low to High
-          </button>
-          <button
-            className="btn"
-            onClick={() => {
-              const highToLowSort = newList.sort(
-                (a, b) => b?.data?.data?.costForTwo - a?.data?.data?.costForTwo
-              );
-              const highToLowFilter = highToLowSort.filter(
-                (x) => x?.data?.data?.costForTwo
-              );
-              setFilteredData(highToLowFilter);
-            }}
-          >
-            Cost: High to low
-          </button>
+      <div className="w-screen dark:bg-slate-950 px-14">
+        <div className="flex overflow-scroll justify-between no-scrollbar">
+          {banner.bannerCarousel.cards.map((item) => (
+            <div className="pr-80">
+              <Recommended key={item.id} top={item} />
+            </div>
+          ))}
         </div>
-        <div className="searchBar">
-          <input
-            type="search"
-            id="searchBar"
-            placeholder="Find a Spot"
-            value={search}
-            onChange={(text) => setSearch(text.target.value)}
 
-            // onClick={() => fetchData()}
-          />
-          <button
-            className="btn"
-            onClick={() => {
-              let filterData = newList.filter((e) =>
-                e?.data?.data?.name.toLowerCase().includes(search.toLowerCase())
-              );
-              setFilteredData(filterData);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "enter") {
-                console.log("enter pressed");
-              }
-            }}
-          >
-            Search
-          </button>
-          <button
-            className="btn"
-            onClick={() => {
-              fetchData();
-            }}
-          >
-            Reset
-          </button>
+        <div className="flex justify-between border-b border-black   dark:bg-slate-800 px-2 items-center py-5">
+          <div className="w-3/4 flex gap-3">
+            <button
+              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              onClick={() => {
+                const topRatedSort = newList.sort(
+                  (a, b) => b?.info?.avgRating - a?.info?.avgRating
+                );
+                const topRatedFilter = topRatedSort.filter(
+                  (x) => x?.info?.avgRating
+                );
+                setFilteredData(topRatedFilter);
+              }}
+            >
+              Top Rated Restaurants
+            </button>
+            <button
+              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              onClick={() => {
+                const deliverySort = newList.sort(
+                  (a, b) =>
+                    a?.info?.sla?.deliveryTime - b?.info?.sla?.deliveryTime
+                );
+                const deliveryFilter = deliverySort.filter(
+                  (x) => x?.info?.sla?.deliveryTime
+                );
+                setFilteredData(deliveryFilter);
+              }}
+            >
+              Faster Delivery
+            </button>
+            <button
+              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              onClick={() => {
+                const lowToHighSort = newList.sort(
+                  (a, b) =>
+                    a?.info?.costForTwo.match(/\d+/g) -
+                    b?.info?.costForTwo.match(/\d+/g)
+                );
+                const lowToHighFilter = lowToHighSort.filter(
+                  (x) => x?.info?.costForTwo
+                );
+                setFilteredData(lowToHighFilter);
+              }}
+            >
+              Cost: Low to High
+            </button>
+            <button
+              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              onClick={() => {
+                const highToLowSort = newList.sort(
+                  (a, b) =>
+                    b?.info?.costForTwo.match(/\d+/g) -
+                    a?.info?.costForTwo.match(/\d+/g)
+                );
+                const highToLowFilter = highToLowSort.filter(
+                  (x) => x?.info?.costForTwo
+                );
+                setFilteredData(highToLowFilter);
+              }}
+            >
+              Cost: High to low
+            </button>
+          </div>
+          <div className="w-2/4 justify-end gap-3 flex">
+            <form onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="search"
+                id="searchBar"
+                placeholder="Find a Spot"
+                className="px-2 py-2 border rounded-lg rounded-r-none outline-none"
+                value={search}
+                onChange={(text) => setSearch(text.target.value)}
+              />
+
+              <button
+                className="bg-black px-4 py-2 text-white rounded-l-none rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+                onClick={() => {
+                  let filterData = newList.filter((e) =>
+                    e?.info?.name.toLowerCase().includes(search.toLowerCase())
+                  );
+                  setFilteredData(filterData);
+                }}
+              >
+                Search
+              </button>
+            </form>
+
+            <button
+              className="bg-black px-4 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              onClick={() => {
+                setFilteredData(newList);
+              }}
+            >
+              Reset
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="container dark:bg-gray-900">
-        {filteredData.map((rest) => (
-          <Link key={rest?.info?.id} to={"/menu/" + rest?.info?.id}>
-            {rest?.info?.promoted ? (
-              <PromotedRestaurant resData={rest} />
-            ) : (
-              <Card resData={rest} />
-            )}
-          </Link>
-        ))}
+        <div className="flex flex-wrap gap-4 px-10 py-6 dark:bg-gray-900">
+          {filteredData.map((rest) => (
+            <Link key={rest?.info?.id} to={"/menu/" + rest?.info?.id}>
+              {rest?.info?.promoted ? (
+                <PromotedRestaurant resData={rest} />
+              ) : (
+                <Card resData={rest} />
+              )}
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );
