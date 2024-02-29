@@ -8,31 +8,75 @@ const MenuItemList = ({ items }) => {
   const [addToggle, setAddToggle] = useState(false);
 
   const handleClick = (i) => {
-    setAddItem((prev) => [{ i, counter: 0 }, ...prev]);
-  };
+    // (prev) => [{ i, counter: 0 }, ...prev];
+    setAddItem((prev) => {
+      const existingItem = prev.find(
+        (item) => item.i.card?.info?.id === i.card?.info?.id
+      );
 
-  const removeItem = (i) => {
-    setAddItem((prev) =>
-      prev.filter((dlt) => dlt.card.info.id !== Object.keys[quantity])
-    );
-  };
-
-  const itemQuantity = (items) => {
-    let counter = {};
-    if (items.length === 0) return;
-    items.forEach((q) => {
-      if (q.card.info.id === q.card.info.id) {
-        counter[q.card.info.id] = (counter[q.card.info.id] || 0) + 1;
-        setQuantity(counter);
+      if (existingItem) {
+        existingItem.counter = existingItem.counter + 1 || 1;
+        return [...prev];
+      } else {
+        return [{ i, counter: 1 }, ...prev];
       }
     });
   };
 
-  useEffect(() => {
-    itemQuantity(addItem);
-  }, [addItem]);
+  const removeItem = (i) => {
+    setAddItem((prev) => {
+      const existingItem = prev.find(
+        (item) => item.i.card?.info?.id === i.card?.info?.id
+      );
 
-  console.log(quantity);
+      if (existingItem) {
+        if (existingItem.counter === 0) return;
+        existingItem.counter = existingItem.counter - 1 || 0;
+        return [...prev];
+      } else {
+        const finalItem = prev.filter(
+          (item) => item.i.card.info.id !== i.card.info.id
+        );
+        return finalItem;
+      }
+    });
+  };
+  // const handleClick = (i) => {
+  //   setAddItem((prev) => {
+  //     const existingItem = prev.find(
+  //       (item) => item.i.card?.info?.id === i.card?.info?.id
+  //     );
+
+  //     if (existingItem) {
+  //       existingItem.counter = existingItem.counter + 1 || 1;
+  //       return [...prev];
+  //     } else {
+  //       [{ i, counter: 1 }, ...prev];
+  //     }
+  //   });
+  // };
+
+  // const removeItem = (i) => {
+  //   setAddItem((prev) =>
+  //     prev.filter((dlt) => dlt.card.info.id !== Object.keys[quantity])
+  //   );
+  // };
+
+  // const itemQuantity = (items) => {
+  //   let counter = {};
+  //   if (items.length === 0) return;
+  //   items.forEach((q) => {
+  //     if (q.i.card.info.id === q.i.card.info.id) {
+  //       counter[q.i.card.info.id] = (counter[q.i.card.info.id] || 0) + 1;
+  //       setQuantity(counter);
+  //     }
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   itemQuantity(addItem);
+  // }, [addItem]);
+
   console.log(addItem);
 
   return (
@@ -77,9 +121,6 @@ const MenuItemList = ({ items }) => {
                   -
                 </p>
               </div>
-              {/* <h1 className="text-bold border rounded cursor-pointer text-center text-[#3D9B6D] font-semibold">
-                ADD +
-              </h1> */}
             </div>
           </div>
         </div>
