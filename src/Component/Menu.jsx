@@ -14,11 +14,27 @@ const menu = () => {
   const resInfo = useRestaurantMenu(id);
 
   const [showItems, setShowItems] = useState(null);
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     // scroll to top on page load
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  }, []);
+    setCategory(
+      resInfo?.cards[2].hasOwnProperty("groupedCard") == true
+        ? resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
+            (c) =>
+              c?.card?.card?.["@type"] ==
+              "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+          )
+        : resInfo?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
+            (c) =>
+              c?.card?.card?.["@type"] ==
+              "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+          )
+    );
+  }, [resInfo]);
+
+  // console.log(formateCategory);
 
   if (resInfo === null) return <ShimmerMenuPage />;
 
@@ -39,40 +55,25 @@ const menu = () => {
 
   // Destructuring for the menu dishes, according to the open time of place, it will display the available dishes
 
-  const categoryCardTwo =
-    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (c) =>
-        c?.card?.card?.["@type"] ==
-        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-    );
+  // const categoryCardTwo =
+  //   resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+  //     (c) =>
+  //       c?.card?.card?.["@type"] ==
+  //       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  //   );
 
-  // console.log(categoryCardTwo);
+  // // console.log(categoryCardTwo);
 
-  const categoryCardThree =
-    resInfo?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (c) =>
-        c?.card?.card?.["@type"] ==
-        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-    );
+  // const categoryCardThree =
+  //   resInfo?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+  //     (c) =>
+  //       c?.card?.card?.["@type"] ==
+  //       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  //   );
 
   // console.log(categoryCardThree);
 
-  const category =
-    resInfo?.cards[2].hasOwnProperty("groupedCard") == true
-      ? resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
-          (c) =>
-            c?.card?.card?.["@type"] ==
-            "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-        )
-      : resInfo?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
-          (c) =>
-            c?.card?.card?.["@type"] ==
-            "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-        );
-
   const { offers } = resInfo?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
-
-  console.log(offers);
 
   return (
     <div className=" text-[#3E4152] dark:bg-gray-900 dark:text-white w-9/12 m-auto bg-white my-6 md:my-12">
@@ -140,7 +141,7 @@ const menu = () => {
 
       <div className="menu px-2 md:px-16 mt-5">
         <h1 className="text-2xl font-bold">Menu</h1>
-        {category.map((item, index) => (
+        {category?.map((item, index) => (
           <>
             <MenuHeader
               data={item?.card?.card}

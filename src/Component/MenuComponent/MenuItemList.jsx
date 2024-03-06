@@ -1,87 +1,52 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MENU_FOOD_IMAGE } from "../../utils/constant";
 import { BiRupee } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, decreasedQuantity } from "../../Redux/cartSlice";
 
 const MenuItemList = ({ items }) => {
-  const [quantity, setQuantity] = useState({});
-  const [addItem, setAddItem] = useState([]);
-  const [addToggle, setAddToggle] = useState(false);
+  const [addItem, setAddItem] = useState(items);
+  const [modifiedItem, setModifiedItem] = useState(items);
+
+  const dispatch = useDispatch();
+
+  const cartItems = useSelector((store) => store?.cart?.cartItems);
+  console.log(cartItems);
 
   const handleClick = (i) => {
-    // (prev) => [{ i, counter: 0 }, ...prev];
-    setAddItem((prev) => {
-      const existingItem = prev.find(
-        (item) => item.i.card?.info?.id === i.card?.info?.id
+    setModifiedItem((prev) => {
+      return prev.map((itemQuantity) =>
+        itemQuantity.card?.info?.id === i?.card?.info?.id
+          ? {
+              ...itemQuantity,
+              quantity: itemQuantity.quantity + 1,
+              addedToCart: true,
+            }
+          : itemQuantity
       );
-
-      if (existingItem) {
-        existingItem.counter = existingItem.counter + 1 || 1;
-        return [...prev];
-      } else {
-        return [{ i, counter: 1 }, ...prev];
-      }
     });
+    dispatch(addToCart(i));
   };
 
-  const removeItem = (i) => {
-    setAddItem((prev) => {
-      const existingItem = prev.find(
-        (item) => item.i.card?.info?.id === i.card?.info?.id
+  const handleDecreaseQuantity = (i) => {
+    setModifiedItem((prev) => {
+      return prev.map((itemQuantity) =>
+        itemQuantity.card?.info?.id === i?.card?.info?.id &&
+        itemQuantity.quantity > 0
+          ? {
+              ...itemQuantity,
+              quantity: itemQuantity.quantity - 1,
+              addedToCart: itemQuantity.quantity - 1 > 0,
+            }
+          : { ...itemQuantity }
       );
-
-      if (existingItem) {
-        if (existingItem.counter === 0) return;
-        existingItem.counter = existingItem.counter - 1 || 0;
-        return [...prev];
-      } else {
-        const finalItem = prev.filter(
-          (item) => item.i.card.info.id !== i.card.info.id
-        );
-        return finalItem;
-      }
     });
+    dispatch(decreasedQuantity(i));
   };
-  // const handleClick = (i) => {
-  //   setAddItem((prev) => {
-  //     const existingItem = prev.find(
-  //       (item) => item.i.card?.info?.id === i.card?.info?.id
-  //     );
-
-  //     if (existingItem) {
-  //       existingItem.counter = existingItem.counter + 1 || 1;
-  //       return [...prev];
-  //     } else {
-  //       [{ i, counter: 1 }, ...prev];
-  //     }
-  //   });
-  // };
-
-  // const removeItem = (i) => {
-  //   setAddItem((prev) =>
-  //     prev.filter((dlt) => dlt.card.info.id !== Object.keys[quantity])
-  //   );
-  // };
-
-  // const itemQuantity = (items) => {
-  //   let counter = {};
-  //   if (items.length === 0) return;
-  //   items.forEach((q) => {
-  //     if (q.i.card.info.id === q.i.card.info.id) {
-  //       counter[q.i.card.info.id] = (counter[q.i.card.info.id] || 0) + 1;
-  //       setQuantity(counter);
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   itemQuantity(addItem);
-  // }, [addItem]);
-
   console.log(addItem);
-
   return (
     <div>
-      {items.map((item) => (
+      {modifiedItem.map((item) => (
         <div
           key={item.card.info.id}
           className="menuContainer flex justify-between border-b py-4"
@@ -105,22 +70,68 @@ const MenuItemList = ({ items }) => {
               alt="No Image Required"
               className="w-[118px] h-[96px] bg-cover bg-center border rounded"
             />
-            <div className="w-[118px] ">
-              <div className="flex justify-between items-center bg-black rounded border">
-                <p
+            <div className="w-[118px]">
+              {item.addedToCart ? (
+                cartItems.map(
+                  (cartItem) =>
+                    cartItem.card.info.id === item.card.info.id && (
+                      <div className="flex justify-between bg-[#3D9B6D] items-center rounded border">
+                        <p
+                          onClick={() => handleClick(item)}
+                          className=" bg-[#3D9B6D] text-white font-bold px-2 py-0.5"
+                        >
+                          +
+                        </p>
+                        <p className="bg-[#3D9B6D] text-white font-bold px-2 py-0.5">
+                          {cartItem.quantity}
+                        </p>
+                        <p
+                          onClick={() => handleDecreaseQuantity(item)}
+                          className=" bg-[#3D9B6D] text-white font-bold px-2 py-0.5"
+                        >
+                          -
+                        </p>
+                      </div>
+                    )
+                )
+              ) : (
+                <h1
                   onClick={() => handleClick(item)}
-                  className="bg-black text-white font-bold px-2 py-0.5"
+                  className="text-bold border rounded cursor-pointer text-center text-[#3D9B6D] font-semibold"
                 >
-                  +
-                </p>
-                <p className="bg-black text-white font-bold px-2 py-0.5">0</p>
-                <p
-                  onClick={() => removeItem(item)}
-                  className="bg-black text-white font-bold px-2 py-0.5"
-                >
-                  -
-                </p>
-              </div>
+                  ADD +
+                </h1>
+              )}
+
+              {/* {cartItems.map((cartItem) =>
+                cartItem.card.info.id === item.card.info.id &&
+                item.addedToCart ? (
+                  <div className="flex justify-between bg-[#3D9B6D] items-center rounded border">
+                    <p
+                      onClick={() => handleClick(item)}
+                      className=" bg-[#3D9B6D] text-white font-bold px-2 py-0.5"
+                    >
+                      +
+                    </p>
+                    <p className="bg-[#3D9B6D] text-white font-bold px-2 py-0.5">
+                      {cartItem.quantity}
+                    </p>
+                    <p
+                      onClick={() => handleDecreaseQuantity(item)}
+                      className=" bg-[#3D9B6D] text-white font-bold px-2 py-0.5"
+                    >
+                      -
+                    </p>
+                  </div>
+                ) : (
+                  <h1
+                    onClick={() => handleClick(item)}
+                    className="text-bold border rounded cursor-pointer text-center text-[#3D9B6D] font-semibold"
+                  >
+                    ADD +
+                  </h1>
+                )
+              )} */}
             </div>
           </div>
         </div>
