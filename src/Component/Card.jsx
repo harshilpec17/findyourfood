@@ -8,7 +8,7 @@ const Card = ({ resData }) => {
 
   return (
     <>
-      <div className="card w-[300px] rounded-md border h-auto bg-[#F5F5F6] dark:bg-gray-900 dark:text-white hover:scale-105 duration-200 ease-in-out">
+      <div className="card w-[300px] rounded-md h-auto bg-[#F5F5F6] dark:bg-black dark:text-white hover:scale-105 duration-200 ease-in-out">
         <img
           src={CARD_IMAGE_URL + cloudinaryImageId}
           alt="Laptop"
@@ -38,7 +38,7 @@ const Card = ({ resData }) => {
           </div>
           <button
             type="button"
-            className="mt-4 w-full rounded-sm bg-[#0D0D0D] px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            className="mt-4 w-full rounded-sm bg-zinc-900 px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
             Let's Order
           </button>

@@ -68,7 +68,7 @@ const MenuItemList = ({ items }) => {
             <img
               src={MENU_FOOD_IMAGE + item.card.info.imageId}
               alt="No Image Required"
-              className="w-[118px] h-[96px] bg-cover bg-center border rounded"
+              className="w-[118px] h-[96px] bg-cover bg-center dark:border-zinc-300 border rounded"
             />
             <div className="w-[118px]">
               {item.addedToCart ? (
@@ -97,7 +97,7 @@ const MenuItemList = ({ items }) => {
               ) : (
                 <h1
                   onClick={() => handleClick(item)}
-                  className="text-bold border rounded cursor-pointer text-center text-[#3D9B6D] font-semibold"
+                  className="text-bold border rounded cursor-pointer text-center dark:border-green-700 text-[#3D9B6D] font-semibold"
                 >
                   ADD +
                 </h1>

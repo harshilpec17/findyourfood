@@ -66,19 +66,19 @@ const Body = () => {
     </div>
   ) : (
     <>
-      <div className="w-screen dark:bg-slate-950 px-14">
+      <div className="w-screen dark:bg-slate-950 px-3 md:px-14">
         <div className="flex overflow-scroll justify-between no-scrollbar">
           {banner.bannerCarousel.cards.map((item) => (
-            <div className="pr-80">
+            <div className="md:pr-80 pr-2">
               <Recommended key={item.id} top={item} />
             </div>
           ))}
         </div>
 
-        <div className="flex justify-between border-b border-black   dark:bg-slate-800 px-2 items-center py-5">
-          <div className="w-3/4 flex gap-3">
+        <div className="flex flex-col md:flex-row justify-between border-b border-black dark:bg-slate-800 md:px-2 items-center md:py-5">
+          <div className="md:w-3/4 flex flex-col md:flex-row gap-1 md:gap-3">
             <button
-              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              className="bg-black md:px-6 px-4 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
               onClick={() => {
                 const topRatedSort = newList.sort(
                   (a, b) => b?.info?.avgRating - a?.info?.avgRating
@@ -92,7 +92,7 @@ const Body = () => {
               Top Rated Restaurants
             </button>
             <button
-              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              className="bg-black md:px-6 px-4  py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
               onClick={() => {
                 const deliverySort = newList.sort(
                   (a, b) =>
@@ -107,7 +107,7 @@ const Body = () => {
               Faster Delivery
             </button>
             <button
-              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              className="bg-black md:px-6 px-4 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
               onClick={() => {
                 const lowToHighSort = newList.sort(
                   (a, b) =>
@@ -123,7 +123,7 @@ const Body = () => {
               Cost: Low to High
             </button>
             <button
-              className="bg-black px-6 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              className="bg-black md:px-6 px-4  py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
               onClick={() => {
                 const highToLowSort = newList.sort(
                   (a, b) =>
@@ -139,7 +139,7 @@ const Body = () => {
               Cost: High to low
             </button>
           </div>
-          <div className="w-2/4 justify-end gap-3 flex">
+          <div className="w-2/4 md:justify-end gap-3 flex">
             <form onSubmit={(e) => e.preventDefault()}>
               <input
                 type="search"
@@ -174,7 +174,7 @@ const Body = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-4 px-10 py-6 dark:bg-gray-900">
+        <div className="flex flex-wrap gap-6 justify-between md:px-20 py-6 dark:bg-gray-900">
           {filteredData.map((rest) => (
             <Link key={rest?.info?.id} to={"/menu/" + rest?.info?.id}>
               {rest?.info?.promoted ? (

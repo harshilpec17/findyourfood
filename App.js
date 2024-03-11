@@ -9,6 +9,8 @@ import Offers from "./src/Component/Offers";
 import Menu from "./src/Component/Menu";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import Cart from "./src/Component/Cart";
+import Error from "./src/Component/Error";
+import Footer from "./src/Component/Footer";
 
 const Contact = lazy(() => import("./src/Component/ContactUs"));
 
@@ -19,6 +21,7 @@ const AppLayout = () => {
         <div className="App">
           <Header />
           <Outlet />
+          <Footer />
         </div>
       </Provider>
     </>
@@ -29,6 +32,8 @@ const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
+    errorElement: <Error />,
+
     children: [
       {
         path: "/",
@@ -59,7 +64,6 @@ const appRouter = createBrowserRouter([
         element: <Menu />,
       },
     ],
-    // errorElement: <Error />,
   },
 ]);
 

@@ -44,20 +44,29 @@ const Header = () => {
                 <li>
                   <Link to="/contact">Contact Us</Link>
                 </li>
-                <li className="">
-                  <Link to="/cart">
-                    {cartItemsAdded.length === 0 ? (
-                      <AiOutlineShoppingCart />
-                    ) : (
-                      <BsFillCartCheckFill />
-                    )}
-                  </Link>
-                </li>
+                <div className="flex items-center gap-1">
+                  <li className="">
+                    <Link to="/cart">
+                      {cartItemsAdded.length === 0 ? (
+                        <AiOutlineShoppingCart />
+                      ) : (
+                        <BsFillCartCheckFill />
+                      )}
+                    </Link>
+                  </li>
+                  <li className="text-sm">
+                    {cartItemsAdded.length > 0 ? cartItemsAdded.length : null}
+                  </li>
+                </div>
               </ul>
             </div>
-            <div className="Buttons flex justify-between">
-              <button className="btn w-36 dark:bg-gray-500">Sign Up</button>
-              <button className="btn w-36 dark:bg-gray-500">Login</button>
+            <div className="Buttons flex gap-3 justify-between">
+              <button className="bg-black px-10 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black">
+                Sign Up
+              </button>
+              <button className="bg-black px-10 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black">
+                Login
+              </button>
             </div>
           </div>
         </div>

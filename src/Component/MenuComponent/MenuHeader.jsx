@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MenuItemList from "./MenuItemList";
+import { BiSolidUpArrowSquare } from "react-icons/bi";
 
 const MenuHeader = ({ data, showList, setShowList }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ const MenuHeader = ({ data, showList, setShowList }) => {
           <h1 className="font-bold text-[20px] ">
             {data?.title} ({data?.itemCards.length})
           </h1>
-          <span className="text-lg">{showList && isOpen ? "🔼" : "🔽"}</span>
+          <span className="text-lg">{showList && isOpen ? "▲" : "▼"}</span>
         </div>
         {showList && isOpen && <MenuItemList items={formateData} />}
       </div>
