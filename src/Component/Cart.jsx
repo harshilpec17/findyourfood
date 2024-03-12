@@ -32,7 +32,12 @@ const Cart = () => {
 
   const handleTotal = (items) => {
     return items.reduce(
-      (total, item) => Number(total + item.card.info.price * item.quantity),
+      (total, item) =>
+        Number(
+          total + item.card.info.price
+            ? item.card.info.price
+            : item.card.info.defaultPrice * item.quantity
+        ),
       0
     );
   };
@@ -53,21 +58,31 @@ const Cart = () => {
       {cartItemsAdded.length === 0 ? (
         <EmptyCart />
       ) : (
-        <div className="h-full dark:bg-stone-900 bg-gray-100 pt-8">
-          <h1 className="mb-10 dark:text-gray-50 text-center text-2xl font-bold">
+        <div className="dark:bg-stone-900 min-h-screen bg-gray-100 py-4 md:py-8">
+          <h1 className="md:mb-10 mb-5 dark:text-gray-50 text-center text-2xl font-bold">
             Cart Items
           </h1>
-          <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+          <div className=" mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
             <div className="rounded-lg md:w-2/3">
               {cartItemsAdded.map((cartItem) => (
                 <div className="justify-between mb-6 rounded-lg dark:bg-neutral-800 bg-white p-6 shadow-md sm:flex sm:justify-start">
-                  <img
-                    src={MENU_FOOD_IMAGE + cartItem.card.info.imageId}
-                    alt="product-image"
-                    className="w-full rounded-lg sm:w-40"
-                  />
+                  <div className="flex justify-between gap-4">
+                    <img
+                      src={MENU_FOOD_IMAGE + cartItem.card.info.imageId}
+                      alt="product-image"
+                      className="rounded-lg w-36 h-24 md:w-40"
+                    />
+                    <div className="sm:hidden sm:mt-0 flex flex-col gap-1 flex-wrap">
+                      <h2 className="text-lg font-bold dark:text-neutral-50 text-gray-900">
+                        {cartItem.card.info.name}
+                      </h2>
+                      <p className=" text-xs dark:text-neutral-300 text-gray-700">
+                        {cartItem.card.info.description}
+                      </p>
+                    </div>
+                  </div>
                   <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                    <div className="mt-5 sm:mt-0 flex flex-col gap-1">
+                    <div className="mt-5 sm:mt-0 hidden sm:block flex-col gap-1">
                       <h2 className="text-lg font-bold dark:text-neutral-50 text-gray-900">
                         {cartItem.card.info.name}
                       </h2>
@@ -76,8 +91,8 @@ const Cart = () => {
                       </p>
                     </div>
 
-                    <div className="mt-4 flex flex-col sm:space-y-24 sm:mt-0 sm:block sm:space-x-4">
-                      <div className="flex items-center border-gray-100">
+                    <div className="mt-4 flex md:flex-col gap-16 md:gap-0 flex-row sm:space-y-24 sm:mt-0 sm:block">
+                      <div className="flex items-center justify-end border-gray-100">
                         <span
                           onClick={() => handleDecreaseQuantity(cartItem)}
                           className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 dark:bg-stone-500 dark:text-neutral-100 hover:bg-blue-500 hover:text-blue-50"
@@ -97,20 +112,19 @@ const Cart = () => {
                           +{" "}
                         </span>
                       </div>
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center gap-2">
                         <p className="font-semibold text-[20px] dark:text-stone-200 flex items-center">
                           <BiRupee />
 
-                          {`${
-                            (
-                              (cartItem.card.info.price / 100) *
-                              cartItem.quantity
-                            ).toFixed(2) ||
-                            (
-                              (cartItem.card.info.defaultPrice / 100) *
-                              cartItem.quantity
-                            ).toFixed(2)
-                          }`}
+                          {cartItem.card.info.price
+                            ? (
+                                (cartItem.card.info.price / 100) *
+                                cartItem.quantity
+                              ).toFixed(2)
+                            : (
+                                (cartItem.card.info.defaultPrice / 100) *
+                                cartItem.quantity
+                              ).toFixed(2)}
                         </p>
                         <div
                           onClick={() => handleDelete(cartItem)}
@@ -125,7 +139,7 @@ const Cart = () => {
               ))}
             </div>
 
-            <div className="mt-6 h-full rounded-lg dark:border-none border dark:bg-neutral-800 bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+            <div className="mt-6 rounded-lg dark:border-none border dark:bg-neutral-800 max-h-64 bg-white p-6 shadow-md md:mt-0 md:w-1/3">
               <div className="mb-2 flex justify-between">
                 <p className=" dark:text-neutral-100 text-gray-700">Subtotal</p>
                 <p className="text-gray-700 dark:text-zinc-200 flex items-center">

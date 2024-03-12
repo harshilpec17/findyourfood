@@ -2,10 +2,9 @@ import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./src/Component/Header";
 import Body from "./src/Component/Body";
-import AboutUs from "./src/Component/AboutUs";
 import { store } from "./src/Redux/store";
 import { Provider } from "react-redux";
-import Offers from "./src/Component/Offers";
+
 import Menu from "./src/Component/Menu";
 import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import Cart from "./src/Component/Cart";
@@ -18,7 +17,7 @@ const AppLayout = () => {
   return (
     <>
       <Provider store={store}>
-        <div className="App">
+        <div className="App overflow-hidden">
           <Header />
           <Outlet />
           <Footer />
@@ -39,10 +38,7 @@ const appRouter = createBrowserRouter([
         path: "/",
         element: <Body />,
       },
-      {
-        path: "about",
-        element: <AboutUs />,
-      },
+
       {
         path: "contact",
         element: (
@@ -50,10 +46,6 @@ const appRouter = createBrowserRouter([
             <Contact />,
           </Suspense>
         ),
-      },
-      {
-        path: "offers",
-        element: <Offers />,
       },
       {
         path: "/cart",

@@ -76,7 +76,7 @@ const menu = () => {
   const { offers } = resInfo?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
 
   return (
-    <div className=" text-[#3E4152] dark:bg-gray-900 dark:text-white w-9/12 m-auto bg-white my-6 md:my-12">
+    <div className=" text-[#3E4152] dark:bg-gray-900 dark:text-white px-3 md:w-9/12 m-auto bg-white my-6 md:my-12">
       {/* Restaurant Basic information 
       Name
       cuisines
@@ -86,7 +86,7 @@ const menu = () => {
       and cost for two people 
        */}
 
-      <div className="basicInformation flex md:flex-row justify-between px-6 md:px-16 py-6 border-b-2 ">
+      <div className="flex md:flex-row justify-between md:px-16 py-3 md:py-6">
         <div>
           <h1 className="font-bold md:text-[28px] ">{name}</h1>
           <p className="md:text-[16px]">{cuisines.join(", ")}</p>
@@ -105,7 +105,7 @@ const menu = () => {
           </div>
         </div>
       </div>
-      <div className="time costForTwo flex justify-between px-6 md:px-16 py-4 gap-20">
+      <div className="bg-slate-200 dark:bg-slate-700 rounded-lg px-2 my-2 flex justify-between md:mx-16 py-2 gap-20">
         <p className="md:text-[16px] flex gap-2 items-center">
           <FaClock /> {deliveryTime} Mins
         </p>
@@ -116,10 +116,10 @@ const menu = () => {
       It provide the information regarding the Discount available to that particular restaurants
       */}
 
-      <div className="discountWrapper md:px-14 flex-wrap flex flex-col md:flex-row items-left">
+      <div className="md:px-14 flex-wrap flex flex-col md:flex-row items-left">
         {offers.map((x) => (
           <div key={x.info.couponCode}>
-            <div className="discount px-6 md:px-2 py-3 w-max">
+            <div className="md:px-2 py-1 md:py-3 w-max">
               <div className="px-4 py-2 card border rounded">
                 <div className="flex items-center text-center">
                   <BsEmojiHeartEyesFill />
@@ -139,7 +139,7 @@ const menu = () => {
 
       {/* It provide the menu items displayed on the page  */}
 
-      <div className="menu px-2 md:px-16 mt-5">
+      <div className="px-2 md:px-16 mt-4 md:mt-5">
         <h1 className="text-2xl font-bold">Menu</h1>
         {category?.map((item, index) => (
           <>

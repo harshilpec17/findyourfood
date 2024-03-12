@@ -1,4 +1,4 @@
-import restObj from "../utils/mockData";
+import { BsSliders } from "react-icons/bs";
 import Card, { withPromotedLabel } from "./Card";
 import { useState, useEffect, useContext } from "react";
 import { Shimmer } from "./ShimmerComponent/ShimmerBody";
@@ -13,6 +13,7 @@ const Body = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState("");
   const [banner] = useState(mockPicks);
+  const [filter, SetFilter] = useState(true);
 
   const PromotedRestaurant = withPromotedLabel(Card);
   useEffect(() => {
@@ -75,83 +76,92 @@ const Body = () => {
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between border-b border-black dark:bg-slate-800 md:px-2 items-center md:py-5">
-          <div className="md:w-3/4 flex flex-col md:flex-row gap-1 md:gap-3">
-            <button
-              className="bg-black md:px-6 px-4 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
-              onClick={() => {
-                const topRatedSort = newList.sort(
-                  (a, b) => b?.info?.avgRating - a?.info?.avgRating
-                );
-                const topRatedFilter = topRatedSort.filter(
-                  (x) => x?.info?.avgRating
-                );
-                setFilteredData(topRatedFilter);
-              }}
-            >
-              Top Rated Restaurants
-            </button>
-            <button
-              className="bg-black md:px-6 px-4  py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
-              onClick={() => {
-                const deliverySort = newList.sort(
-                  (a, b) =>
-                    a?.info?.sla?.deliveryTime - b?.info?.sla?.deliveryTime
-                );
-                const deliveryFilter = deliverySort.filter(
-                  (x) => x?.info?.sla?.deliveryTime
-                );
-                setFilteredData(deliveryFilter);
-              }}
-            >
-              Faster Delivery
-            </button>
-            <button
-              className="bg-black md:px-6 px-4 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
-              onClick={() => {
-                const lowToHighSort = newList.sort(
-                  (a, b) =>
-                    a?.info?.costForTwo.match(/\d+/g) -
-                    b?.info?.costForTwo.match(/\d+/g)
-                );
-                const lowToHighFilter = lowToHighSort.filter(
-                  (x) => x?.info?.costForTwo
-                );
-                setFilteredData(lowToHighFilter);
-              }}
-            >
-              Cost: Low to High
-            </button>
-            <button
-              className="bg-black md:px-6 px-4  py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
-              onClick={() => {
-                const highToLowSort = newList.sort(
-                  (a, b) =>
-                    b?.info?.costForTwo.match(/\d+/g) -
-                    a?.info?.costForTwo.match(/\d+/g)
-                );
-                const highToLowFilter = highToLowSort.filter(
-                  (x) => x?.info?.costForTwo
-                );
-                setFilteredData(highToLowFilter);
-              }}
-            >
-              Cost: High to low
-            </button>
-          </div>
-          <div className="w-2/4 md:justify-end gap-3 flex">
-            <form onSubmit={(e) => e.preventDefault()}>
+        <div className="flex md:flex-row flex-wrap px-2 justify-between border-b border-black dark:bg-gray-800 md:px-2 items-center py-2">
+          <p
+            className="md:hidden block dark:text-white text-xl pl-1 py-2"
+            onClick={() => SetFilter(!filter)}
+          >
+            <BsSliders />
+          </p>
+          {filter ? (
+            <div className=" flex md:flex-row gap-2 py-2 md:gap-3 flex-wrap">
+              <button
+                className="bg-black md:px-6 md:py-2 px-3 py-1.5 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+                onClick={() => {
+                  const topRatedSort = newList.sort(
+                    (a, b) => b?.info?.avgRating - a?.info?.avgRating
+                  );
+                  const topRatedFilter = topRatedSort.filter(
+                    (x) => x?.info?.avgRating
+                  );
+                  setFilteredData(topRatedFilter);
+                }}
+              >
+                Top Rated Restaurants
+              </button>
+              <button
+                className="bg-black md:px-6 md:py-2 px-3 py-1.5 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+                onClick={() => {
+                  const deliverySort = newList.sort(
+                    (a, b) =>
+                      a?.info?.sla?.deliveryTime - b?.info?.sla?.deliveryTime
+                  );
+                  const deliveryFilter = deliverySort.filter(
+                    (x) => x?.info?.sla?.deliveryTime
+                  );
+                  setFilteredData(deliveryFilter);
+                }}
+              >
+                Faster Delivery
+              </button>
+              <button
+                className="bg-black md:px-6 md:py-2 px-3 py-1.5 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+                onClick={() => {
+                  const lowToHighSort = newList.sort(
+                    (a, b) =>
+                      a?.info?.costForTwo.match(/\d+/g) -
+                      b?.info?.costForTwo.match(/\d+/g)
+                  );
+                  const lowToHighFilter = lowToHighSort.filter(
+                    (x) => x?.info?.costForTwo
+                  );
+                  setFilteredData(lowToHighFilter);
+                }}
+              >
+                Cost: Low to High
+              </button>
+              <button
+                className="bg-black md:px-6 md:py-2 px-3 py-1.5 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+                onClick={() => {
+                  const highToLowSort = newList.sort(
+                    (a, b) =>
+                      b?.info?.costForTwo.match(/\d+/g) -
+                      a?.info?.costForTwo.match(/\d+/g)
+                  );
+                  const highToLowFilter = highToLowSort.filter(
+                    (x) => x?.info?.costForTwo
+                  );
+                  setFilteredData(highToLowFilter);
+                }}
+              >
+                Cost: High to low
+              </button>
+            </div>
+          ) : null}
+
+          <div className="md:justify-end md:gap-3 gap-2 py-2 items-center flex">
+            <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="search"
                 id="searchBar"
                 placeholder="Find a Spot"
-                className="px-2 py-2 border rounded-lg rounded-r-none outline-none"
+                className="md:px-2 px-1 md:py-2 py-0.5 border rounded-lg rounded-r-none outline-none"
                 value={search}
                 onChange={(text) => setSearch(text.target.value)}
               />
 
               <button
-                className="bg-black px-4 py-2 text-white rounded-l-none rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+                className="bg-black md:px-4 px-3 md:py-2 py-1 text-white rounded-l-none rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
                 onClick={() => {
                   let filterData = newList.filter((e) =>
                     e?.info?.name.toLowerCase().includes(search.toLowerCase())
@@ -164,7 +174,7 @@ const Body = () => {
             </form>
 
             <button
-              className="bg-black px-4 py-2 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
+              className="bg-black md:px-4 px-3 md:py-2 py-1 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
               onClick={() => {
                 setFilteredData(newList);
               }}
@@ -174,7 +184,7 @@ const Body = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-6 justify-between md:px-20 py-6 dark:bg-gray-900">
+        <div className="flex flex-wrap gap-3 md:gap-6 justify-between px-6 md:px-20 py-6 dark:bg-gray-900">
           {filteredData.map((rest) => (
             <Link key={rest?.info?.id} to={"/menu/" + rest?.info?.id}>
               {rest?.info?.promoted ? (

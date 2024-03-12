@@ -15,7 +15,9 @@ export default function Switcher() {
 
   return (
     <>
-      <DarkModeSwitch checked={darkSide} onChange={toggleDarkMode} />
+      <div className="bg-yellow-300 dark:bg-blue-700 p-1 rounded">
+        <DarkModeSwitch checked={darkSide} onChange={toggleDarkMode} />
+      </div>
     </>
   );
 }
