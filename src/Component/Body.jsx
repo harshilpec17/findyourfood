@@ -14,7 +14,7 @@ const Body = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState("");
   const [banner] = useState(mockPicks);
-  const [filter, SetFilter] = useState(true);
+  const [filter, SetFilter] = useState(false);
 
   const PromotedRestaurant = withPromotedLabel(Card);
   useEffect(() => {
@@ -198,7 +198,7 @@ const Body = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 md:gap-4 justify-between px-6 md:px-12 py-6 dark:bg-gray-900">
+        <div className="flex flex-wrap md:flex-row flex-col gap-2 md:gap-4 justify-between items-center px-6 md:px-12 py-6 dark:bg-gray-900">
           {filteredData.map((rest) => (
             <Link key={rest?.info?.id} to={"/menu/" + rest?.info?.id}>
               {rest?.info?.promoted ? (
