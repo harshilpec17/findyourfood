@@ -15,15 +15,13 @@ const Contact = lazy(() => import("./src/Component/ContactUs"));
 
 const AppLayout = () => {
   return (
-    <>
-      <Provider store={store}>
-        <div className="App overflow-hidden">
-          <Header />
-          <Outlet />
-          <Footer />
-        </div>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <div className="App overflow-hidden">
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    </Provider>
   );
 };
 

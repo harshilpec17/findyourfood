@@ -4,7 +4,6 @@ const Card = ({ resData }) => {
   const { cloudinaryImageId, name, cuisines, costForTwo, avgRating } =
     resData?.info || {};
   const { deliveryTime } = resData?.info?.sla || {};
-  console.log(cuisines);
 
   return (
     <>

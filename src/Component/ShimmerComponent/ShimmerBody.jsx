@@ -25,7 +25,7 @@ export const Shimmer = () => {
           <>
             <div
               className="card w-[250px] rounded-md border bg-gray-500 m-4"
-              key={element}
+              key={Date.now()}
             >
               <div className="h-[200px] w-full rounded-t-md object-cover"></div>
 

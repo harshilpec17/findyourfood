@@ -12,8 +12,6 @@ const Header = () => {
 
   const cartItemsAdded = useSelector((store) => store.cart.cartItems);
 
-  console.log(cartItemsAdded);
-
   return (
     <>
       <div className="dark:bg-gray-900 dark:text-white">

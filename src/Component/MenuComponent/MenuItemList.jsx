@@ -11,7 +11,6 @@ const MenuItemList = ({ items }) => {
   const dispatch = useDispatch();
 
   const cartItems = useSelector((store) => store?.cart?.cartItems);
-  console.log(cartItems);
 
   const handleClick = (i) => {
     setModifiedItem((prev) => {
@@ -43,7 +42,7 @@ const MenuItemList = ({ items }) => {
     });
     dispatch(decreasedQuantity(i));
   };
-  console.log(addItem);
+
   return (
     <div>
       {modifiedItem.map((item) => (
@@ -77,19 +76,20 @@ const MenuItemList = ({ items }) => {
                     cartItem.card.info.id === item.card.info.id && (
                       <div className="flex justify-between bg-[#3D9B6D] items-center rounded border">
                         <p
-                          onClick={() => handleClick(item)}
-                          className=" bg-[#3D9B6D] text-white font-bold px-2 py-0.5"
-                        >
-                          +
-                        </p>
-                        <p className="bg-[#3D9B6D] text-white font-bold px-2 py-0.5">
-                          {cartItem.quantity}
-                        </p>
-                        <p
                           onClick={() => handleDecreaseQuantity(item)}
                           className=" bg-[#3D9B6D] text-white font-bold px-2 py-0.5"
                         >
                           -
+                        </p>
+
+                        <p className="bg-[#3D9B6D] text-white font-bold px-2 py-0.5">
+                          {cartItem.quantity}
+                        </p>
+                        <p
+                          onClick={() => handleClick(item)}
+                          className=" bg-[#3D9B6D] text-white font-bold px-2 py-0.5"
+                        >
+                          +
                         </p>
                       </div>
                     )

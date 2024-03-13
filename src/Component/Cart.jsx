@@ -34,9 +34,11 @@ const Cart = () => {
     return items.reduce(
       (total, item) =>
         Number(
-          total + item.card.info.price
-            ? item.card.info.price
-            : item.card.info.defaultPrice * item.quantity
+          total +
+            (item.card.info.price
+              ? item.card.info.price
+              : item.card.info.defaultPrice) *
+              item.quantity
         ),
       0
     );

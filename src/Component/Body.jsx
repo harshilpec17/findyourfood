@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Recommended from "./Recommended";
 import mockPicks from "../utils/mockPicks";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { RESTAURANT_LIST } from "../utils/constant";
 
 const Body = () => {
   const [newList, setNewList] = useState([]);
@@ -21,12 +22,9 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      " https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
+    const data = await fetch(RESTAURANT_LIST);
 
     const json = await data.json();
-    console.log(json);
 
     async function checkJsonData(jsonData) {
       for (let i = 0; i < jsonData?.data?.cards.length; i++) {
@@ -46,7 +44,6 @@ const Body = () => {
     // call the checkJsonData() function which return Swiggy Restaurant data
     const restaurantData = await checkJsonData(json);
 
-    console.log(restaurantData);
     setNewList(restaurantData);
     setFilteredData(restaurantData);
   };
@@ -184,7 +181,7 @@ const Body = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-3 md:gap-6 justify-between px-6 md:px-20 py-6 dark:bg-gray-900">
+        <div className="flex flex-wrap gap-2 md:gap-6 justify-between px-6 md:px-16 py-6 dark:bg-gray-900">
           {filteredData.map((rest) => (
             <Link key={rest?.info?.id} to={"/menu/" + rest?.info?.id}>
               {rest?.info?.promoted ? (

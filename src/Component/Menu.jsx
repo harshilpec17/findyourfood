@@ -7,34 +7,22 @@ import { BsEmojiHeartEyesFill } from "react-icons/bs";
 import { AiFillStar } from "react-icons/ai";
 import { ImLocation } from "react-icons/im";
 import MenuHeader from "./MenuComponent/MenuHeader";
+import { useSelector } from "react-redux";
 
 const menu = () => {
   const { id } = useParams("");
 
   const resInfo = useRestaurantMenu(id);
+  const menu = useSelector((store) => store?.menu?.menuData);
+  const offers = useSelector((store) => store?.menu?.offers);
+  const info = useSelector((store) => store?.menu?.info);
 
   const [showItems, setShowItems] = useState(null);
-  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     // scroll to top on page load
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    setCategory(
-      resInfo?.cards[2].hasOwnProperty("groupedCard") == true
-        ? resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
-            (c) =>
-              c?.card?.card?.["@type"] ==
-              "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-          )
-        : resInfo?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
-            (c) =>
-              c?.card?.card?.["@type"] ==
-              "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-          )
-    );
-  }, [resInfo]);
-
-  // console.log(formateCategory);
+  }, [menu]);
 
   if (resInfo === null) return <ShimmerMenuPage />;
 
@@ -47,33 +35,13 @@ const menu = () => {
     avgRating,
     totalRatingsString,
     locality,
-  } = resInfo?.cards[0]?.card?.card?.info;
+  } = info.info;
 
   // Destructuring for the deliveryTime information on the menu
 
-  const { deliveryTime } = resInfo?.cards[0]?.card?.card?.info?.sla;
+  const { deliveryTime } = info?.info?.sla;
 
-  // Destructuring for the menu dishes, according to the open time of place, it will display the available dishes
-
-  // const categoryCardTwo =
-  //   resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-  //     (c) =>
-  //       c?.card?.card?.["@type"] ==
-  //       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-  //   );
-
-  // // console.log(categoryCardTwo);
-
-  // const categoryCardThree =
-  //   resInfo?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-  //     (c) =>
-  //       c?.card?.card?.["@type"] ==
-  //       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-  //   );
-
-  // console.log(categoryCardThree);
-
-  const { offers } = resInfo?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
+  // const { offers } = resInfo?.cards[1]?.card?.card?.gridElements?.infoWithStyle;
 
   return (
     <div className=" text-[#3E4152] dark:bg-gray-900 dark:text-white px-3 md:w-9/12 m-auto bg-white my-6 md:my-12">
@@ -117,7 +85,7 @@ const menu = () => {
       */}
 
       <div className="md:px-14 flex-wrap flex flex-col md:flex-row items-left">
-        {offers.map((x) => (
+        {offers.offers.map((x) => (
           <div key={x.info.couponCode}>
             <div className="md:px-2 py-1 md:py-3 w-max">
               <div className="px-4 py-2 card border rounded">
@@ -141,11 +109,11 @@ const menu = () => {
 
       <div className="px-2 md:px-16 mt-4 md:mt-5">
         <h1 className="text-2xl font-bold">Menu</h1>
-        {category?.map((item, index) => (
+        {menu?.map((item, index) => (
           <>
             <MenuHeader
               data={item?.card?.card}
-              key={item?.card?.card.title}
+              key={Date.now()}
               showList={showItems == index ? true : false}
               setShowList={() => setShowItems(index)}
             />
