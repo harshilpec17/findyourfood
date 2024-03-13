@@ -21,6 +21,23 @@ const Body = () => {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     SetFilter(window.innerWidth < 768);
+  //   };
+
+  //   // Initial check
+  //   handleResize();
+
+  //   // Add event listener for window resize
+  //   window.addEventListener("resize", handleResize);
+
+  //   // Clean up the event listener
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
+
   const fetchData = async () => {
     const data = await fetch(RESTAURANT_LIST);
 
@@ -75,13 +92,13 @@ const Body = () => {
 
         <div className="flex md:flex-row flex-wrap px-2 justify-between border-b border-black dark:bg-gray-800 md:px-2 items-center py-2">
           <p
-            className="md:hidden block dark:text-white text-xl pl-1 py-2"
+            className=" dark:text-white text-xl pl-1 py-2"
             onClick={() => SetFilter(!filter)}
           >
             <BsSliders />
           </p>
           {filter ? (
-            <div className=" flex md:flex-row gap-2 py-2 md:gap-3 flex-wrap">
+            <div className="flex md:flex-row gap-2 py-2 md:gap-3 flex-wrap">
               <button
                 className="bg-black md:px-6 md:py-2 px-3 py-1.5 text-white rounded-md font-semibold outline-none hover:bg-violet-300 hover:text-black"
                 onClick={() => {
@@ -181,7 +198,7 @@ const Body = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 md:gap-6 justify-between px-6 md:px-16 py-6 dark:bg-gray-900">
+        <div className="flex flex-wrap gap-2 md:gap-4 justify-between px-6 md:px-12 py-6 dark:bg-gray-900">
           {filteredData.map((rest) => (
             <Link key={rest?.info?.id} to={"/menu/" + rest?.info?.id}>
               {rest?.info?.promoted ? (

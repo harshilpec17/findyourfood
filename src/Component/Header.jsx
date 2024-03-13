@@ -26,7 +26,7 @@ const Header = () => {
 
           <div className="md:flex md:justify-between items-center">
             <div>
-              <ul className="flex flex-wrap text-[18px] md:text-[20px] font-semibold justify-between px-3 md:gap-8 items-center">
+              <ul className="flex flex-wrap text-[18px] md:text-[20px] font-semibold justify-between gap-3 px-3 md:gap-8 items-center">
                 <li>
                   <Link to="/">Home</Link>
                 </li>
