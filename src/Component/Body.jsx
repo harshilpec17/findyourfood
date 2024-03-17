@@ -21,23 +21,6 @@ const Body = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     SetFilter(window.innerWidth < 768);
-  //   };
-
-  //   // Initial check
-  //   handleResize();
-
-  //   // Add event listener for window resize
-  //   window.addEventListener("resize", handleResize);
-
-  //   // Clean up the event listener
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
   const fetchData = async () => {
     const data = await fetch(RESTAURANT_LIST);
 
@@ -69,7 +52,7 @@ const Body = () => {
 
   if (onlineStatus === false)
     return (
-      <h1>
+      <h1 className="bg-red-300 font-bold text-7xl mt-36 h-screen text-center">
         Looks like you're offline!! Please check your internet connection;
       </h1>
     );
@@ -92,7 +75,7 @@ const Body = () => {
 
         <div className="flex md:flex-row flex-wrap px-2 justify-between border-b border-black dark:bg-gray-800 md:px-2 items-center py-2">
           <p
-            className=" dark:text-white text-xl pl-1 py-2"
+            className=" dark:text-white text-xl pl-2 py-2 cursor-pointer"
             onClick={() => SetFilter(!filter)}
           >
             <BsSliders />
