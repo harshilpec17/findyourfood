@@ -2,7 +2,7 @@
 
 Food delivery web app is a dynamic and user-friendly platform designed to connect users with local restaurants for quick and convenient food ordering.
 
-### **[findyourmovie.vercel.app](https://findyourfood.vercel.app/)**
+### **[findyourfood.vercel.app](https://findyourfood.vercel.app/)**
 
 ![findyourfood.com](/src/Asset/findyourfood.png)
 
