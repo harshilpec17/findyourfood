@@ -301,16 +301,16 @@ const ContactUs = () => {
                 <div className="mb-6">
                   <div className="flex justify-between flex-wrap gap-2 w-full">
                     <span className="text-purple-500 font-semibold text-2xl">
-                      Find Your Movie
+                      Find Your Food
                     </span>
                     <p>
                       <span
                         onClick={() =>
-                          openInNewTab("https://findyourmovie.vercel.app/")
+                          openInNewTab("https://findyourfood.vercel.app/")
                         }
                         className="text-blue-400 text-lg underline cursor-pointer mr-2"
                       >
-                        findyourmovie.vercel.app
+                        findyourfood.vercel.app
                       </span>
                     </p>
                   </div>
