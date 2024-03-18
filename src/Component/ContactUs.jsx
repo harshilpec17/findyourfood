@@ -331,8 +331,18 @@ const ContactUs = () => {
                 <div className="mb-6">
                   <div className="flex justify-between flex-wrap gap-2 w-full">
                     <span className="text-purple-500 font-semibold text-2xl">
-                      Video Streaming App
+                      Find Your Video
                     </span>
+                    <p>
+                      <span
+                        onClick={() =>
+                          openInNewTab("https://findyourvideo.vercel.app/")
+                        }
+                        className="text-blue-400 text-lg underline cursor-pointer mr-2"
+                      >
+                        findyourvideo.vercel.app
+                      </span>
+                    </p>
                   </div>
                   <p className="text-gray-100 text-xl pt-2">
                     Application providing core functionalities to users with a
