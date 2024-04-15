@@ -5,6 +5,8 @@ const Card = ({ resData }) => {
     resData?.info || {};
   const { deliveryTime } = resData?.info?.sla || {};
 
+  console.log(CARD_IMAGE_URL + cloudinaryImageId);
+
   return (
     <>
       <div className="card w-[300px] rounded-md h-auto bg-[#F5F5F6] dark:bg-black dark:text-white hover:scale-105 duration-200 ease-in-out">
