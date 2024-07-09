@@ -6,9 +6,17 @@ const ContactUs = () => {
     window.open(url, "_blank", "noreferrer");
   };
   const [emailToggle, setEmailToggle] = useState(false);
+  const [gitData, setGitData] = useState([]);
+
+  const fetchGitData = async () => {
+    const data = await fetch(`https://api.github.com/users/harshilpec17`);
+    const json = await data.json();
+    setGitData(json);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchGitData();
   }, []);
 
   return (
@@ -20,11 +28,11 @@ const ContactUs = () => {
               <div className="bg-[#12100E] shadow rounded-lg p-6">
                 <div className="flex flex-col items-center">
                   <img
-                    src="https://randomuser.me/api/portraits/men/94.jpg"
+                    src={gitData.avatar_url}
                     alt="profile"
                     className="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
                   ></img>
-                  <h1 className="text-2xl font-bold">Harshil Suthar</h1>
+                  <h1 className="text-2xl font-bold">{gitData.name}</h1>
                   <p className="text-gray-400">Frontend Developer</p>
                 </div>
                 <div className="flex flex-col">
@@ -301,12 +309,12 @@ const ContactUs = () => {
                 <div className="mb-6">
                   <div className="flex justify-between flex-wrap gap-2 w-full">
                     <span className="text-purple-500 font-semibold text-2xl">
-                      Find Your Food
+                      Find Your Movie
                     </span>
                     <p>
                       <span
                         onClick={() =>
-                          openInNewTab("https://findyourfood.vercel.app/")
+                          openInNewTab("https://findyourmovie.vercel.app/")
                         }
                         className="text-blue-400 text-lg underline cursor-pointer mr-2"
                       >

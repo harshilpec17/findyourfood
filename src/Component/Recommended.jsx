@@ -1,6 +1,7 @@
 import React from "react";
 
 const topPicks = ({ top }) => {
+  console.log(top.imageId);
   return (
     <div className="flex-col mx-auto grid w-full items-center md:py-10 py-3 md:grid-cols-2 md:gap-6 md:space-y-0 lg:grid-cols-4">
       <div className="relative aspect-[16/9] md:w-[360px] w-[200px] rounded-md md:aspect-auto md:h-auto">

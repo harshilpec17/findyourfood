@@ -14,7 +14,12 @@ const Body = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState("");
   const [banner] = useState(mockPicks);
+  const [quickFood, setQuickFood] = useState([]);
   const [filter, SetFilter] = useState(false);
+
+  console.log(quickFood?.data?.cards[0]?.card?.card?.imageGridCards?.info[0]);
+
+  // console.log(newList.cards[0].card.card.imageGridCards.info[0]);
 
   const PromotedRestaurant = withPromotedLabel(Card);
   useEffect(() => {
@@ -25,6 +30,8 @@ const Body = () => {
     const data = await fetch(RESTAURANT_LIST);
 
     const json = await data.json();
+
+    setQuickFood(json);
 
     async function checkJsonData(jsonData) {
       for (let i = 0; i < jsonData?.data?.cards.length; i++) {
@@ -65,12 +72,25 @@ const Body = () => {
   ) : (
     <>
       <div className="w-screen dark:bg-slate-950 px-3 md:px-14">
-        <div className="flex overflow-scroll justify-between no-scrollbar">
-          {banner.bannerCarousel.cards.map((item) => (
-            <div className="md:pr-80 pr-2">
-              <Recommended key={item.id} top={item} />
-            </div>
-          ))}
+        <div className="flex flex-col py-3">
+          <h1 className="text-3xl font-bold pt-6 pb-4 dark:text-gray-200 px-3">
+            what's on your mind ?
+          </h1>
+          <div className="flex overflow-scroll no-scrollbar py-2">
+            {quickFood?.data?.cards[0]?.card?.card?.imageGridCards?.info.map(
+              (banner) => (
+                <div className="flex-shrink-0 px-2">
+                  <img
+                    className="h-36 w-32 rounded-3xl border-none object-fill"
+                    src={
+                      "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/" +
+                      banner.imageId
+                    }
+                  ></img>
+                </div>
+              )
+            )}
+          </div>
         </div>
 
         <div className="flex md:flex-row flex-wrap px-2 justify-between border-b border-black dark:bg-gray-800 md:px-2 items-center py-2">
@@ -152,7 +172,7 @@ const Body = () => {
                 type="search"
                 id="searchBar"
                 placeholder="Find a Spot"
-                className="md:px-2 px-1 md:py-2 py-0.5 border rounded-lg rounded-r-none outline-none"
+                className="md:px-2 px-1 md:py-2 py-0.5 border rounded-lg rounded-r-none outline-none dark:bg-gray-200"
                 value={search}
                 onChange={(text) => setSearch(text.target.value)}
               />
