@@ -28,6 +28,7 @@ const Cart = () => {
 
   const handleDecreaseQuantity = (item) => {
     item.quantity > 1 && dispatch(decreasedQuantity(item));
+    item.quantity === 1 && dispatch(removeFromCart(item));
   };
 
   const handleTotal = (items) => {
